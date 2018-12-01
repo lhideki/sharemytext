@@ -2,6 +2,9 @@ import json
 import datetime
 import logging
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 def create_response(status_code = 200, body = None):
     res = {
         'statusCode': status_code,
@@ -11,7 +14,7 @@ def create_response(status_code = 200, body = None):
     return res
 
 def get(event, context):
-    id = event['id']
+    id = event['pathParameters']['id']
     text = id
     
     data = {
@@ -22,8 +25,8 @@ def get(event, context):
     return create_response(body = json.dumps(data))
 
 def post(event, context):
-    id = event['id']
-    text = event['text']
+    id = event['pathParameters']['id']
+    text = event['body']['text']
     now = datetime.datetime.now()
     data = {
         'id': id,
@@ -31,6 +34,6 @@ def post(event, context):
         'lastUpdatedDate': now
     }
     
-    logging.info(data)
+    logger.info(data)
     
     return create_response()

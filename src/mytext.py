@@ -26,11 +26,11 @@ def get(event, context):
     )
 
     if 'Item' in res:
-        text = res['Item']
+        item = res['Item']
         data = {
             'isExists': True,
-            'text': text,
-            'timestamp': datetime.datetime.utcnow().isoformat()
+            'text': item['text'],
+            'lastUpdatedDate': item['lastUpdatedDate']
         }
     else:
         data = {

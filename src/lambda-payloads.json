@@ -1,7 +1,7 @@
 {
     "GetMyTextFunction": {
         "apigateway": {
-            "path": "/mytext/fefefe",
+            "path": "/mytext/test",
             "method": {
                 "value": "GET",
                 "items": [

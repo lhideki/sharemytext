@@ -7,14 +7,82 @@
   <meta name="description" content="Share your shor text in short time">
   <meta name="author" content="inoue-kobo.com">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <!--[if lt IE 9]>
   <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
   <link rel="shortcut icon" href="">
+  <style type="text/css">
+    .main.container {
+      margin-top: 1.5em;
+    }
+  </style>
 </head>
 <body>
-  fe
+  <div class="ui main text container">
+    <h1 class="ui dividing header">Share My Text</h1>
+    <form class="ui form">
+      <div class="ui labeled input">
+        <label for="id" class="ui label">ID</label>
+        <input id="id" type="text" placeholder="Please input your id." />
+      </div>
+      <div class="field">
+        <label>My text for you</label>
+        <textarea id='text'></textarea>
+      </div>
+      <button class="ui button">Share</button>
+    </form>
+  </div>
+  <script>
+    // Constant
+    const url = 'https://rktngegy1f.execute-api.ap-northeast-1.amazonaws.com/Prod/mytext/'
+    // Functions
+    const initDisplay = () => {
+      const query = document.location.search;
+      let id = null;
+    
+      if (query.length > 1) {
+        id = query.substr(1);
+      }
+      
+      if (id) {
+        const idEl = document.getElementById('id')
+        
+        idEl.value = id;
+        idEl.readOnly = true;
+        idEl.parentElement.classList.add('disabled')
+        
+        getText(id);
+      }
+    }
+    const getText = async (id) =>{
+      const urlWithId = url + 'id';
+      const res = await fetch(urlWithId);
+      const text = await res.json();
+      
+      console.log(text);
+    }
+    const changeId = (event) => {
+      const id = event.target.value;
+      const textEl = document.getElementById('text');
+      
+      if (!id) {
+        textEl.readOnly = true;
+        textEl.parentElement.classList.add('disabled');
+      } else {
+        textEl.readOnly = false;
+        textEl.parentElement.classList.remove('disabled');
+      }
+    }
+    // Main
+    const idEl = document.getElementById('id');
+    
+    idEl.addEventListener('change', changeId);
+    
+    initDisplay();
+  </script>
 </body>
 </html>

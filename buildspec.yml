@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  variables:
+    WEB_S3_BUCKET: "s3://service.inoue-kobo.com/apps"
+    WEBAPP_URL: "/sharemytext/v1"
+    CF_DIST_ID: "E208S385TP0C8T"
+
 phases:
   install:
     commands:
@@ -18,6 +24,11 @@ phases:
 
       # Use AWS SAM to package the application by using AWS CloudFormation
       - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
+      - aws s3 sync web $WEB_S3_BUCKET/$WEBAPP_URL
+
+  post_build:
+    commands:
+      - aws cloudfront create-invalidation --region ap-northeast-1 --distribution-id $CF_DIST_ID --paths "$WEBAPP_URL/*"
 
 artifacts:
   type: zip

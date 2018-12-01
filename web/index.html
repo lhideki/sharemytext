@@ -23,24 +23,72 @@
 </head>
 <body>
   <div class="ui main text container">
-    <h1 class="ui dividing header">Share My Text</h1>
+    <h1 class="ui dividing header">
+      Share My Text
+      <a href="#" id="info-icon">
+        <i class="info circle icon" style="font-size: 15pt; margin-bottom: 20px;"></i>
+      </a>
+    </h1>
     <form class="ui form">
-      <div class="ui labeled input">
-        <label for="id" class="ui label">ID</label>
+      <div class="ui action input left icon">
+        <i class="user icon"></i>
         <input id="id" type="text" placeholder="Please input your id." />
+        <button class="ui button" id="copy-url" type="button">
+          <i class="copy icon"></i>
+        </button>
       </div>
       <div class="field">
         <label>My text for you</label>
         <textarea id='text'></textarea>
+        <div class="ui pointing label" style="visibility: hidden">
+          Last Updated: <span id="last-updated-date"></span>
+        </div>
       </div>
       <button class="ui button" id="submit" type="button">Share</button>
     </form>
   </div>
+  <div class="ui footer">
+    <div class="ui container" style="text-align: center">
+      <div class="ui divider"></div>
+      <small class="">inoue-kobo.com</small>
+    </div>
+  </div>
+  <div class="ui modal">
+    <div class="header">Share My Text</div>
+    <div class="content">
+      <div class="description">
+        <h2>利用方法</h2>
+        <p>
+        Share My Textは一時的にテキスト情報を共有するためのサービスです。
+        ユーザアイコンの横にIDを入力しCopyアイコンを押下すると、
+        他のユーザと共有するためのURLがクリップボードにコピーされます。
+        <br />
+        後は共有したいテキストを入力してShareボタンを押下するだけです。
+        URLを知っているユーザは、あなたが入力したテキストを表示したり編集したりする事ができます。
+        </p>
+        <p>
+        入力したテキストは、最後に編集してから<strong>1時間で自動的に削除</strong>されます。
+        テキストを保存するためのサービスでは無いため注意してください。
+        </p>
+        <h2>免責事項</h2>
+        <ol>
+          <li>当社は，本サービスに事実上または法律上の瑕疵（安全性，信頼性，正確性，完全性，有効性，特定の目的への適合性，セキュリティなどに関する欠陥，エラーやバグ，権利侵害などを含みます。）がないことを明示的にも黙示的にも保証しておりません。</li>
+          <li>当社は，本サービスに起因してユーザーに生じたあらゆる損害について一切の責任を負いません。</li>
+          <li>当社は，本サービスに関して，ユーザーと他のユーザーまたは第三者との間において生じた取引，連絡または紛争等について一切責任を負いません。</li>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui positive right button">
+        Close
+      </div>
+    </div>
+  </div>
   <script>
     // Constant
     const url = 'https://rktngegy1f.execute-api.ap-northeast-1.amazonaws.com/Prod/mytext/'
+    const webUrl = 'https://service.inoue-kobo.com/sharemytext/v1/index.html'
     // Functions
-    const initDisplay = () => {
+    const initDisplay = async () => {
       const query = document.location.search;
       let id = null;
     
@@ -50,29 +98,38 @@
       
       if (id) {
         const idEl = document.getElementById('id')
+        const textEl = document.getElementById('text');
+        const lastUpdatedDateEl = document.getElementById('last-updated-date');
         
         idEl.value = id;
         idEl.readOnly = true;
         idEl.parentElement.classList.add('disabled')
         
-        getText(id);
+        const item = await getItem(id);
+        
+        if (!item.isExists) {
+          return;
+        }
+        
+        textEl.value = item.text;
+        lastUpdatedDateEl.textContent = new Date(item.lastUpdatedDate);
+        lastUpdatedDateEl.parentElement.style.visibility = 'visible';
       }
     }
-    const getText = async (id) => {
+    const getItem = async (id) => {
       const urlWithId = url + id;
       const res = await fetch(urlWithId);
       const item = await res.json();
-      const textEl = document.getElementById('text');
-     
+      
       console.log(item);
       
-      textEl.textContent = item.text;
+      return item;
+      
     }
-    const postText = async (id) => {
+    const postText = async (id, text) => {
       const urlWithId = url + id;
-      const textEl = document.getElementById('text');
       const params = {
-        text: textEl.textContent
+        text: text
       }
       const res = await fetch(urlWithId, {
         method: 'POST',
@@ -94,19 +151,34 @@
     }
     const submit = (event) => {
       const id = document.getElementById('id').value;
+      const textEl = document.getElementById('text');
+      const text = textEl.value;
       
-      console.log(id);
+      console.log(id, text);
       
-      postText(id);
+      postText(id, text);
       
       return false;
+    }
+    const copyUrl = async (event) => {
+      const id = document.getElementById('id').value;
+      const webUrlWithId = webUrl + '?' + id;
+      
+      const res = await navigator.clipboard.writeText(webUrlWithId);
+    }
+    const displayInfo = () => {
+      $('.ui.modal').modal('show');
     }
     // Main
     const idEl = document.getElementById('id');
     const submitEl = document.getElementById('submit');
+    const copyUrlEl = document.getElementById('copy-url');
+    const infoIconEl = document.getElementById('info-icon');
     
     idEl.addEventListener('change', changeId);
     submitEl.addEventListener('click', submit);
+    copyUrlEl.addEventListener('click', copyUrl);
+    infoIconEl.addEventListener('click', displayInfo);
     
     initDisplay();
   </script>

@@ -37,6 +37,20 @@ Resources:
           Properties:
             Path: /mytext/{id}
             Method: post
+  CleanerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.6
+      Handler: src/cleaner.clean
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        ScheduleEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 hours)
+      
   TextsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:

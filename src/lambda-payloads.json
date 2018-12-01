@@ -34,5 +34,8 @@
             },
             "body": "{\"text\":\"test\"}"
         }
+    },
+    "CleanerFunction": {
+        "lambda": {}
     }
 }

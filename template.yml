@@ -37,10 +37,10 @@ Resources:
           Properties:
             Path: /mytext
             Method: post
-#  TextsTable:
-#    Type: AWS::DynamoDB::SimpleTable
-#    Properties:
-#      TableName: sharemytext.Texts
-#      PrimaryKey:
-#        Name: id
-#        Type: String
+  TextsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: sharemytext.Texts
+      PrimaryKey:
+        Name: id
+        Type: String

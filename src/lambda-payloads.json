@@ -7,13 +7,17 @@
                 "items": [
                     "GET"
                 ]
-            },
-            "queryString": "id=te"
+            }
+        },
+        "lambda": {
+            "event": {
+                "id": "test"
+            }
         }
     },
     "PostMyTextFunction": {
         "apigateway": {
-            "path": "/mytext/idfefe",
+            "path": "/mytext/fefefe",
             "method": {
                 "value": "GET",
                 "items": [

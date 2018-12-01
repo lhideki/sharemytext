@@ -11,7 +11,7 @@ def create_response(status_code = 200, body = None):
     return res
 
 def get(event, context):
-    id = event.id
+    id = event['id']
     text = id
     
     data = {
@@ -22,8 +22,8 @@ def get(event, context):
     return create_response(body = json.dumps(data))
 
 def post(event, context):
-    id = event.id
-    text = event.text
+    id = event['id']
+    text = event['text']
     now = datetime.datetime.now()
     data = {
         'id': id,

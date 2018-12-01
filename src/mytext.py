@@ -12,7 +12,7 @@ texts_table = dynamodb.Table('sharemytext.Texts')
 def create_response(status_code = 200, body = None):
     res = {
         'statusCode': status_code,
-        'body': body
+        'body': json.dumps(body)
     }
     
     return res

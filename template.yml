@@ -9,18 +9,18 @@ Parameters:
     Description: CodeStar projectId used to associate new resources to team members
 
 Resources:
-  #TextsTable:
-  #  Type: AWS::DynamoDB::Table
-  #  Properties:
-  #    TableName: sharemytext.Texts
-  #    KeySchema:
-  #      - 
-  #        AttributeName: id
-  #        KeyType: HASH
-  #    AttributeDefinitions:
-  #      - 
-  #        AttributeName: id
-  #        AttributeType: S
+  TextsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: sharemytext.Texts
+      KeySchema:
+        - 
+          AttributeName: id
+          KeyType: HASH
+      AttributeDefinitions:
+        - 
+          AttributeName: id
+          AttributeType: S
   
   GetMyTextFunction:
     Type: AWS::Serverless::Function

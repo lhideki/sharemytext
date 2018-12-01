@@ -33,7 +33,7 @@
         <label>My text for you</label>
         <textarea id='text'></textarea>
       </div>
-      <button class="ui button">Share</button>
+      <button class="ui button" id="submit" type="button">Share</button>
     </form>
   </div>
   <script>
@@ -58,17 +58,32 @@
         getText(id);
       }
     }
-    const getText = async (id) =>{
-      const urlWithId = url + 'id';
+    const getText = async (id) => {
+      const urlWithId = url + id;
       const res = await fetch(urlWithId);
-      const text = await res.json();
+      const item = await res.json();
+      const textEl = document.getElementById('text');
+     
+      console.log(item);
       
-      console.log(text);
+      textEl.textContent = item.text;
+    }
+    const postText = async (id) => {
+      const urlWithId = url + id;
+      const textEl = document.getElementById('text');
+      const params = {
+        body: textEl.textContent
+      }
+      const res = await fetch(urlWithId, {
+        method: 'POST',
+        body: JSON.stringify(params)
+      });
+      console.log(res);
     }
     const changeId = (event) => {
       const id = event.target.value;
       const textEl = document.getElementById('text');
-      
+
       if (!id) {
         textEl.readOnly = true;
         textEl.parentElement.classList.add('disabled');
@@ -77,10 +92,21 @@
         textEl.parentElement.classList.remove('disabled');
       }
     }
+    const submit = (event) => {
+      const id = document.getElementById('id').value;
+      
+      console.log(id);
+      
+      postText(id);
+      
+      return false;
+    }
     // Main
     const idEl = document.getElementById('id');
+    const submitEl = document.getElementById('submit');
     
     idEl.addEventListener('change', changeId);
+    submitEl.addEventListener('click', submit);
     
     initDisplay();
   </script>

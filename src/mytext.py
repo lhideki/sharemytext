@@ -13,7 +13,8 @@ def create_response(status_code = 200, body = None):
     res = {
         'statusCode': status_code,
         'headers': {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
         },
         'body': json.dumps(body)
     }

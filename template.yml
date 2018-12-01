@@ -49,7 +49,7 @@ Resources:
         ScheduleEvent:
           Type: Schedule
           Properties:
-            Schedule: rate(1 hours)
+            Schedule: rate(1 hour)
       
   TextsTable:
     Type: AWS::Serverless::SimpleTable

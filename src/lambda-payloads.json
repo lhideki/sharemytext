@@ -32,9 +32,7 @@
             "pathParameters": {
                 "id": "test"
             },
-            "body": {
-                "text": "body text23"
-            }
+            "body": "{\"text\":\"test\"}"
         }
     }
 }

@@ -46,10 +46,8 @@ def get(event, context):
     return create_response(body = data)
 
 def post(event, context):
-    logging.info(event);
-    
     id = event['pathParameters']['id']
-    body = json.load(event['body'])
+    body = json.loads(event['body'])
     text = body['text']
     now = datetime.datetime.now()
     data = {

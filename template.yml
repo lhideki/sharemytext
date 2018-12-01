@@ -35,7 +35,7 @@ Resources:
           Type: Api
           Properties:
             Path: /mytext
-            Method: GET 
+            Method: get
   PostMyTextFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -49,4 +49,4 @@ Resources:
           Type: Api
           Properties:
             Path: /mytext
-            Method: POST
+            Method: post

@@ -36,17 +36,17 @@ Resources:
           Properties:
             Path: /mytext
             Method: get
-  PostMyTextFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Runtime: python3.6
-      Handler: src/mytext.post
-      Role:
-        Fn::ImportValue:
-          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
-      Events:
-        PostEvent:
-          Type: Api
-          Properties:
-            Path: /mytext
-            Method: post
+  #PostMyTextFunction:
+  #  Type: AWS::Serverless::Function
+  #  Properties:
+  #    Runtime: python3.6
+  #    Handler: src/mytext.post
+  #    Role:
+  #      Fn::ImportValue:
+  #        !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+  #    Events:
+  #      PostEvent:
+  #        Type: Api
+  #        Properties:
+  #          Path: /mytext
+  #          Method: post

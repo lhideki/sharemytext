@@ -1,0 +1,25 @@
+{
+    "GetMyTextFunction": {
+        "apigateway": {
+            "path": "/mytext",
+            "method": {
+                "value": "GET",
+                "items": [
+                    "GET"
+                ]
+            }
+        }
+    },
+    "PostMyTextFunction": {
+        "apigateway": {
+            "path": "/mytext",
+            "method": {
+                "value": "GET",
+                "items": [
+                    "GET"
+                ]
+            }
+        },
+        "lambda": {}
+    }
+}

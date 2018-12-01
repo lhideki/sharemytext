@@ -8,22 +8,25 @@ Parameters:
     Type: String
     Description: CodeStar projectId used to associate new resources to team members
 
-# Enable blue/green deployments using this Globals section. For instructions, see the AWS CodeStar User Guide:
-# https://docs.aws.amazon.com/codestar/latest/userguide/how-to-modify-serverless-project.html?icmpid=docs_acs_rm_tr
-#
-# Globals:
-#   Function:
-#     AutoPublishAlias: live
-#     DeploymentPreference:
-#       Enabled: true
-#       Type: Canary10Percent5Minutes
-
 Resources:
-  HelloWorld:
+  TextsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: sharemytext.Texts
+      KeySchema:
+        - 
+          AttributeName: id
+          KeyType: HASH
+      AttributeDefinitions:
+        - 
+          AttributeName: id
+          AttributeType: S
+  
+  GetMyTextFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
       Runtime: python3.6
+      Handler: src/mytext.get
       Role:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
@@ -31,10 +34,19 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /
-            Method: get
+            Path: /mytext
+            Method: GET 
+  PostMyTextFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.6
+      Handler: src/mytext.post
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
         PostEvent:
           Type: Api
           Properties:
-            Path: /
-            Method: post
+            Path: /mytext
+            Method: POST

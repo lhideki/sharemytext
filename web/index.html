@@ -72,7 +72,7 @@
       const urlWithId = url + id;
       const textEl = document.getElementById('text');
       const params = {
-        body: textEl.textContent
+        text: textEl.textContent
       }
       const res = await fetch(urlWithId, {
         method: 'POST',

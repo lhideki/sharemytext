@@ -88,6 +88,20 @@
     const url = 'https://rktngegy1f.execute-api.ap-northeast-1.amazonaws.com/Prod/mytext/'
     const webUrl = 'https://service.inoue-kobo.com/sharemytext/v1/index.html'
     // Functions
+    const fixTimezone = (date) => {
+      const now = new Date();
+      const offset = now.getTimezoneOffset() / 60;
+      const fixedHour = date.getHours() - offset;
+      const fixedDate = new Date(date.getYear() + 1900,
+                               date.getMonth(),
+                               date.getDate(),
+                               fixedHour,
+                               date.getMinutes(),
+                               date.getSeconds(),
+                               date.getMilliseconds())
+                               
+      return fixedDate;
+    }
     const initDisplay = async () => {
       const query = document.location.search;
       let id = null;
@@ -112,7 +126,7 @@
         }
         
         textEl.value = item.text;
-        lastUpdatedDateEl.textContent = new Date(item.lastUpdatedDate);
+        lastUpdatedDateEl.textContent = fixTimezone(new Date(item.lastUpdatedDate)).toLocaleString();
         lastUpdatedDateEl.parentElement.style.visibility = 'visible';
       }
     }

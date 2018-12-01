@@ -9,17 +9,6 @@ Parameters:
     Description: CodeStar projectId used to associate new resources to team members
 
 Resources:
-  TextsTable:
-    Type: AWS::DynamoDB::SimpleTable
-    Properties:
-      TableName: sharemytext.Texts
-      PrimaryKey:
-        Name: id
-        Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-    
   GetMyTextFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -48,3 +37,13 @@ Resources:
           Properties:
             Path: /mytext
             Method: post
+  TextsTable:
+    Type: AWS::DynamoDB::SimpleTable
+    Properties:
+      TableName: sharemytext.Texts
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5

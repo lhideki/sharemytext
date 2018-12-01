@@ -44,7 +44,10 @@
           Last Updated: <span id="last-updated-date"></span>
         </div>
       </div>
-      <button class="ui button" id="submit" type="button">Share</button>
+      <div class="actions">
+        <button class="ui button" id="share-text" type="button">Share</button>
+        <button class="ui button" id="copy-text" type="button">Copy</button>
+      </div>
     </form>
   </div>
   <div class="ui footer">
@@ -180,19 +183,26 @@
       
       const res = await navigator.clipboard.writeText(webUrlWithId);
     }
+    const copyText = async (event) => {
+      const text = document.getElementById('text').value;
+      
+      const res = await navigator.clipboard.writeText(text);
+    }
     const displayInfo = () => {
       $('.ui.modal').modal('show');
     }
     // Main
     const idEl = document.getElementById('id');
-    const submitEl = document.getElementById('submit');
+    const shareTextEl = document.getElementById('share-text');
     const copyUrlEl = document.getElementById('copy-url');
     const infoIconEl = document.getElementById('info-icon');
+    const copyTextEl = document.getElementById('copy-text');
     
     idEl.addEventListener('change', changeId);
-    submitEl.addEventListener('click', submit);
+    shareTextEl.addEventListener('click', submit);
     copyUrlEl.addEventListener('click', copyUrl);
     infoIconEl.addEventListener('click', displayInfo);
+    copyTextEl.addEventListener('click', copyText);
     
     initDisplay();
   </script>

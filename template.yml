@@ -21,7 +21,7 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /mytext
+            Path: /mytext/{id}
             Method: get
   PostMyTextFunction:
     Type: AWS::Serverless::Function
@@ -35,7 +35,7 @@ Resources:
         PostEvent:
           Type: Api
           Properties:
-            Path: /mytext
+            Path: /mytext/{id}
             Method: post
   TextsTable:
     Type: AWS::Serverless::SimpleTable

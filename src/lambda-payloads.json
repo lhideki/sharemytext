@@ -1,18 +1,19 @@
 {
     "GetMyTextFunction": {
         "apigateway": {
-            "path": "/mytext",
+            "path": "/mytext/fefefe",
             "method": {
                 "value": "GET",
                 "items": [
                     "GET"
                 ]
-            }
+            },
+            "queryString": "id=te"
         }
     },
     "PostMyTextFunction": {
         "apigateway": {
-            "path": "/mytext",
+            "path": "/mytext/idfefe",
             "method": {
                 "value": "GET",
                 "items": [

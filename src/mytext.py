@@ -1,6 +1,5 @@
 import json
 import datetime
-import uuid
 import logging
 
 def create_response(status_code = 200, body = None):
@@ -12,7 +11,8 @@ def create_response(status_code = 200, body = None):
     return res
 
 def get(event, context):
-    text = 'Get from DynamoDB'
+    id = event.id
+    text = id
     
     data = {
         'output': text,
@@ -22,9 +22,8 @@ def get(event, context):
     return create_response(body = json.dumps(data))
 
 def post(event, context):
-    id = uuid.uuid4()
-    #text = event.text
-    text = 'test'
+    id = event.id
+    text = event.text
     now = datetime.datetime.now()
     data = {
         'id': id,

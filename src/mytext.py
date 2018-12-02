@@ -56,13 +56,14 @@ def post(event, context):
         'lastUpdatedDate': now.isoformat()
     }
     
-    logger.info(data)
     res = texts_table.put_item(
         Item = data
     )
     status_code = res['ResponseMetadata']['HTTPStatusCode']
     
     if status_code > 200:
+        logger.error(res)
+        
         return create_response(status_code = status_code,
             body = {
                 "status": "Creation error"

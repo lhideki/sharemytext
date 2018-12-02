@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-24462002-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-24462002-2');
+  </script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Share My Text</title>
   <meta charset="utf-8">
@@ -166,14 +175,15 @@
         textEl.parentElement.classList.remove('disabled');
       }
     }
-    const submit = (event) => {
+    const submit = async (event) => {
       const id = document.getElementById('id').value;
       const textEl = document.getElementById('text');
       const text = textEl.value;
       
       console.log(id, text);
       
-      postText(id, text);
+      await postText(id, text);
+      document.location.search = id;
       
       return false;
     }
